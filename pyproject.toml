@@ -17,11 +17,19 @@ classifiers = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.9"
+# Required
+python = ">=3.9,<4.0"
+# Docs
+jupyter-book = {version="*", optional=true}
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
 pytest = "*"
+
+[tool.poetry.extras]
+docs = [
+    "jupyter-book",
+]
 
 [tool.poetry-dynamic-versioning]
 bump = true
