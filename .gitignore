@@ -12,3 +12,6 @@ MANIFEST
 
 # Unit test / coverage reports
 .pytest_cache/
+
+# Jupyter Book
+/docs/_build/
