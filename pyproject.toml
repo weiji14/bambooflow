@@ -21,6 +21,7 @@ python = ">=3.9"
 
 [tool.poetry.group.dev.dependencies]
 black = "*"
+pytest = "*"
 
 [tool.poetry-dynamic-versioning]
 bump = true

@@ -1,0 +1,47 @@
+# This workflow will install Python dependencies and run tests with a variety of Python versions
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
+
+name: Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    types: [opened, ready_for_review, reopened, synchronize]
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: ${{ matrix.os }} - Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11"]
+        os: [ubuntu-22.04]
+
+    steps:
+      # Checkout current git repository
+      - name: Checkout
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9 # v3.5.3
+
+      # Install Python
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@61a6322f88396a6271a6ee3565807d608ecaddd1 # v4.7.0
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # Install poetry package manager and dependencies from poetry.lock
+      - name: Install Poetry python dependencies
+        run: |
+          pip install poetry==1.5.1
+          poetry install
+          poetry self add poetry-dynamic-versioning[plugin]
+          poetry show
+
+      # Run the unit tests
+      - name: Test with pytest
+        run: poetry run pytest --verbose bambooflow/

@@ -9,3 +9,6 @@ dist/
 *.egg-info/
 .eggs/
 MANIFEST
+
+# Unit test / coverage reports
+.pytest_cache/
