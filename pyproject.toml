@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bambooflow"
-version = "0.1.0"
+version = "0.0.0"
 description = "First make the hollow pipe, then let the water flow~"
 authors = ["Wei Ji <23487320+weiji14@users.noreply.github.com>"]
 license = "LGPL-3.0-or-later"
@@ -12,6 +12,12 @@ python = ">=3.9"
 [tool.poetry.group.dev.dependencies]
 black = "*"
 
+[tool.poetry-dynamic-versioning]
+bump = true
+enable = true
+metadata = true
+style = "pep440"
+
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.6.0", "poetry-dynamic-versioning"]
 build-backend = "poetry.core.masonry.api"
