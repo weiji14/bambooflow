@@ -29,6 +29,7 @@ html:
 
 sphinx:
   config:
+    myst_all_links_external: true
     html_show_copyright: false
   extra_extensions:
     - 'sphinx.ext.autodoc'
