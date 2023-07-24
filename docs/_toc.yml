@@ -6,3 +6,5 @@ root: index
 chapters:
   - title: 📖 API Reference
     file: api
+  - title: 🫶 Code of Conduct
+    file: CODE_OF_CONDUCT
