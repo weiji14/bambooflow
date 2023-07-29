@@ -1,6 +1,10 @@
 # API Reference
 
+## Asynchronous-style DataPipes
+
 ```{eval-rst}
-.. automodule:: bambooflow
+.. automodule:: bambooflow.datapipes
     :members:
+.. autoclass:: bambooflow.datapipes.AsyncIterDataPipe
+    :show-inheritance:
 ```
