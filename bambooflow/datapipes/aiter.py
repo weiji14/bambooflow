@@ -19,5 +19,5 @@ class AsyncIterDataPipe(collections.abc.AsyncIterable):
 
     def __repr__(self) -> str:
         # Instead of showing <bamboopipe. ... .AsyncIterableWrapper at 0x.....>,
-        # return the class name like <AsyncIterableWrapper>
+        # return the qualified name of the class like <AsyncIterableWrapper>
         return str(self.__class__.__qualname__)
