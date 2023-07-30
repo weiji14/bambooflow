@@ -31,5 +31,15 @@ sphinx:
   config:
     myst_all_links_external: true
     html_show_copyright: false
+    extlinks:
+      py-term:
+        - 'https://docs.python.org/3/glossary.html#term-%s'
+        - '%s'
+    intersphinx_mapping:
+      python:
+        - 'https://docs.python.org/3/'
+        - null
   extra_extensions:
     - 'sphinx.ext.autodoc'
+    - 'sphinx.ext.extlinks'
+    - 'sphinx.ext.intersphinx'
