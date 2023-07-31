@@ -42,6 +42,6 @@ jobs:
           poetry self add poetry-dynamic-versioning[plugin]
           poetry show
 
-      # Run the unit tests
+      # Run the unit tests and doctests
       - name: Test with pytest
-        run: poetry run pytest --verbose bambooflow/
+        run: poetry run pytest --verbose --doctest-modules bambooflow/

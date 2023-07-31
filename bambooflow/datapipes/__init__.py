@@ -6,4 +6,7 @@ This is well-suited for cases when I/O latency is slow, e.g. when waiting on
 network connections, or performing read operations on multiple files at once.
 """
 
-from bambooflow.datapipes.aiter import AsyncIterDataPipe
+from bambooflow.datapipes.aiter import (
+    AsyncIterDataPipe,
+    AsyncIterableWrapperAsyncIterDataPipe as AsyncIterableWrapper,
+)

@@ -7,4 +7,7 @@
     :members:
 .. autoclass:: bambooflow.datapipes.AsyncIterDataPipe
     :show-inheritance:
+.. autoclass:: bambooflow.datapipes.AsyncIterableWrapper
+.. autoclass:: bambooflow.datapipes.aiter.AsyncIterableWrapperAsyncIterDataPipe
+    :show-inheritance:
 ```

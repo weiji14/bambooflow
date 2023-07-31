@@ -7,6 +7,7 @@ license = "LGPL-3.0-or-later"
 readme = "README.md"
 classifiers = [
     "Development Status :: 1 - Planning",
+    "Framework :: AsyncIO",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
     "Topic :: Scientific/Engineering",
@@ -25,6 +26,7 @@ jupyter-book = {version="*", optional=true}
 [tool.poetry.group.dev.dependencies]
 black = "*"
 pytest = "*"
+pytest-asyncio = "*"
 
 [tool.poetry.extras]
 docs = [
@@ -36,6 +38,9 @@ bump = true
 enable = true
 metadata = true
 style = "pep440"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
 
 [build-system]
 requires = ["poetry-core>=1.6.0", "poetry-dynamic-versioning"]
