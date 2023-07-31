@@ -45,7 +45,7 @@ class AsyncIterableWrapperAsyncIterDataPipe(AsyncIterDataPipe):
     >>> import asyncio
     >>> from bambooflow.datapipes import AsyncIterableWrapper
     ...
-    >>> # Wrap a list into an asynchronous
+    >>> # Wrap a list into an asynchronous iterator
     >>> dp = AsyncIterableWrapper(iterable=[3, 6, 9])
     ...
     >>> # Loop or iterate over the DataPipe stream
