@@ -1,7 +1,7 @@
 """
-Base classes for Asynchronous Iterable DataPipes.
+Asynchronous Iterable DataPipes base class and wrapper.
 """
-import collections
+import collections.abc
 
 
 class AsyncIterDataPipe(collections.abc.AsyncIterable):
@@ -21,3 +21,56 @@ class AsyncIterDataPipe(collections.abc.AsyncIterable):
         # Instead of showing <bamboopipe. ... .AsyncIterableWrapper at 0x.....>,
         # return the qualified name of the class like <AsyncIterableWrapper>
         return str(self.__class__.__qualname__)
+
+
+class AsyncIterableWrapperAsyncIterDataPipe(AsyncIterDataPipe):
+    """
+    Wraps an iterable object to create an AsyncIterDataPipe.
+
+    Adapted from https://peps.python.org/pep-0492/#example-2
+
+    Parameters
+    ----------
+    iterable : collections.abc.Iterable
+        An :py-term:`iterable` object to be wrapped into an AsyncIterDataPipe.
+
+    Yields
+    ------
+    awaitable : collections.abc.Awaitable
+        An :py-term:`awaitable` object from the
+        :py-term:`asynchronous iterator <asynchronous-iterator>`.
+
+    Example
+    -------
+    >>> import asyncio
+    >>> from bambooflow.datapipes import AsyncIterableWrapper
+    ...
+    >>> # Wrap a list into an asynchronous
+    >>> dp = AsyncIterableWrapper(iterable=[3, 6, 9])
+    ...
+    >>> # Loop or iterate over the DataPipe stream
+    >>> it = aiter(dp)
+    >>> number = anext(it)
+    >>> asyncio.run(number)
+    3
+    >>> number = anext(it)
+    >>> asyncio.run(number)
+    6
+    >>> # Or if running in an interactive REPL with top-level `await` support
+    >>> number = anext(it)  # doctest: +SKIP
+    >>> await number  # doctest: +SKIP
+    9
+    """
+
+    def __init__(self, iterable):
+        self._iterable = iter(iterable)
+
+    def __aiter__(self):
+        return self
+
+    async def __anext__(self):
+        try:
+            value = next(self._iterable)
+        except StopIteration as err:
+            raise StopAsyncIteration from err
+        return value
