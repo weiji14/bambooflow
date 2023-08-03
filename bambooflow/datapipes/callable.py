@@ -25,6 +25,13 @@ class MapperAsyncIterDataPipe(AsyncIterDataPipe):
         An :py-term:`awaitable` object from the
         :py-term:`asynchronous iterator <asynchronous-iterator>`.
 
+    Raises
+    ------
+    ExceptionGroup
+        If any one of the concurrent tasks raises an :py:class:`Exception`. See
+        `PEP654 <https://peps.python.org/pep-0654/#handling-exception-groups>`_
+        for general advice on how to handle exception groups.
+
     Example
     -------
     >>> import asyncio
