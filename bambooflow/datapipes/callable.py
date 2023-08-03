@@ -59,11 +59,15 @@ class MapperAsyncIterDataPipe(AsyncIterDataPipe):
         self._fn = fn
 
     async def __aiter__(self) -> AsyncIterator:
-        async with asyncio.TaskGroup() as task_group:
-            tasks: list[asyncio.Task] = [
-                task_group.create_task(coro=self._fn(data))
-                async for data in self._datapipe
-            ]
+        try:
+            async with asyncio.TaskGroup() as task_group:
+                tasks: list[asyncio.Task] = [
+                    task_group.create_task(coro=self._fn(data))
+                    async for data in self._datapipe
+                ]
+        except* BaseException as err:
+            raise ValueError(f"{err=}") from err
+
         for task in tasks:
             result = await task
             yield result

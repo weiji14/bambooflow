@@ -2,6 +2,7 @@
 Tests for callable datapipes.
 """
 import asyncio
+import re
 import time
 from collections.abc import Awaitable
 
@@ -33,7 +34,18 @@ def fixture_times_three():
     return times_three
 
 
-async def test_mapper(times_two, times_three):
+@pytest.fixture(scope="function", name="error_four")
+def fixture_error_four():
+    async def error_four(x):
+        await asyncio.sleep(0.1)
+        if x == 4:
+            raise ValueError(f"Some problem with {x}")
+
+    return error_four
+
+
+# %%
+async def test_mapper_concurrency(times_two, times_three):
     """
     Ensure that MapperAsyncIterDataPipe works to process tasks concurrently,
     such that three tasks taking 3*(0.2+0.3)=1.5 seconds in serial can be
@@ -55,3 +67,28 @@ async def test_mapper(times_two, times_three):
 
     assert toc - tic < 0.55  # Total time should be about 0.5 seconds
     assert num == 12  # 2*2*3=12
+
+
+async def test_mapper_exception_handling(error_four):
+    """
+    Ensure that MapperAsyncIterDataPipe can capture exceptions when one of the
+    tasks raises an error.
+    """
+    dp = AsyncIterableWrapper(iterable=[3, 4, 5])
+    dp_map = Mapper(datapipe=dp, fn=error_four)
+
+    it = aiter(dp_map)
+    number = anext(it)
+    # Checek that an ExceptionGroup is already raised on first access
+    with pytest.raises(
+        ValueError,
+        match=re.escape(
+            "err=ExceptionGroup('unhandled errors in a TaskGroup', [ValueError('Some problem with 4')])"
+        ),
+    ):
+        await number
+
+    # Subsequent access to iterator should raise StopAsyncIteration
+    number = anext(it)
+    with pytest.raises(StopAsyncIteration):
+        await number
