@@ -10,3 +10,4 @@ from bambooflow.datapipes.aiter import (
     AsyncIterDataPipe,
     AsyncIterableWrapperAsyncIterDataPipe as AsyncIterableWrapper,
 )
+from bambooflow.datapipes.callable import MapperAsyncIterDataPipe as Mapper
