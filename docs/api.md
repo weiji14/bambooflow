@@ -21,3 +21,11 @@ Datapipes which apply a custom asynchronous function to elements in a DataPipe.
 .. autoclass:: bambooflow.datapipes.callable.MapperAsyncIterDataPipe
     :show-inheritance:
 ```
+
+## Helper Functions
+
+```{eval-rst}
+.. automodule:: bambooflow.helpers
+    :members:
+.. autoclass:: bambooflow.helpers.functional_datapipe
+```

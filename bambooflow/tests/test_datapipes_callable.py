@@ -75,7 +75,11 @@ async def test_mapper_exception_handling(error_four):
     tasks raises an error.
     """
     dp = AsyncIterableWrapper(iterable=[3, 4, 5])
+
+    # Using class constructors
     dp_map = Mapper(datapipe=dp, fn=error_four)
+    # Using functional form (recommended)
+    dp_map = dp.map(fn=error_four)
 
     it = aiter(dp_map)
     number = anext(it)

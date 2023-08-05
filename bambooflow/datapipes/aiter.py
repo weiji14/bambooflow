@@ -1,10 +1,11 @@
 """
 Asynchronous Iterable DataPipes base class and wrapper.
 """
-import collections.abc
+import functools
+from collections.abc import AsyncIterable, AsyncIterator, Awaitable, Callable, Iterable
 
 
-class AsyncIterDataPipe(collections.abc.AsyncIterable):
+class AsyncIterDataPipe(AsyncIterable):
     """
     Asynchronous iterable-style DataPipes.
 
@@ -17,8 +18,20 @@ class AsyncIterDataPipe(collections.abc.AsyncIterable):
     an ``AsyncIterDataPipe``.
     """
 
+    _functions: dict[str, Callable] = {}
+
+    def __getattr__(self, attribute_name: str) -> Callable:
+        """ """
+        if f := AsyncIterDataPipe._functions.get(attribute_name):
+            function = functools.partial(f, self)
+        else:
+            raise AttributeError(
+                f"'{self.__class__.__name__}' object has no attribute '{attribute_name}'"
+            )
+        return function
+
     def __repr__(self) -> str:
-        # Instead of showing <bamboopipe. ... .AsyncIterableWrapper at 0x.....>,
+        # Instead of showing <bambooflow. ... .AsyncIterableWrapper at 0x.....>,
         # return the qualified name of the class like <AsyncIterableWrapper>
         return str(self.__class__.__qualname__)
 
@@ -62,13 +75,13 @@ class AsyncIterableWrapperAsyncIterDataPipe(AsyncIterDataPipe):
     9
     """
 
-    def __init__(self, iterable):
+    def __init__(self, iterable: Iterable):
         self._iterable = iter(iterable)
 
-    def __aiter__(self):
+    def __aiter__(self) -> AsyncIterator:
         return self
 
-    async def __anext__(self):
+    async def __anext__(self) -> Awaitable:
         try:
             value = next(self._iterable)
         except StopIteration as err:
