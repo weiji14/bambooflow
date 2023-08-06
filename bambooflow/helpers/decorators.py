@@ -8,17 +8,18 @@ from bambooflow.datapipes.aiter import AsyncIterDataPipe
 
 class functional_datapipe:
     """
-    Decorator to wrap an AsyncIterDataPipe to have a functional form.
+    Decorator to wrap an ``AsyncIterDataPipe`` to have a functional form.
 
     Parameters
     ----------
     name : str
-        The name for the functional form of the AsyncIterDataPipe.
+        The name for the functional form of the
+        :py:class:`bambooflow.datapipes.AsyncIterDataPipe`.
 
     Note
     ----
     The functional method is injected into the private ``_functions`` variable
-    of the base AsyncIterDataPipe class, and relies on the modified
+    of the base ``AsyncIterDataPipe`` class, and relies on the modified
     ``AsyncIterDataPipe.__getattr__`` method to call the wrapped function.
 
     Example

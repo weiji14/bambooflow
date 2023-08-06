@@ -1,5 +1,5 @@
 """
-Test the helper functions/classes/etc used to build DataPipes.
+Test the helper function/class decorators used to build DataPipes.
 """
 import pydoc
 
