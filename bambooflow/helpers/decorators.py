@@ -15,6 +15,12 @@ class functional_datapipe:
     name : str
         The name for the functional form of the AsyncIterDataPipe.
 
+    Note
+    ----
+    The functional method is injected into the private ``_functions`` variable
+    of the base AsyncIterDataPipe class, and relies on the modified
+    ``AsyncIterDataPipe.__getattr__`` method to call the wrapped function.
+
     Example
     -------
     >>> from bambooflow.datapipes import AsyncIterableWrapper

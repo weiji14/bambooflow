@@ -21,7 +21,10 @@ class AsyncIterDataPipe(AsyncIterable):
     _functions: dict[str, Callable] = {}
 
     def __getattr__(self, attribute_name: str) -> Callable:
-        """ """
+        """
+        Allow calling functions stored in the private ``_functions`` variable,
+        e.g. those added by the functional_datapipe decorator.
+        """
         if f := AsyncIterDataPipe._functions.get(attribute_name):
             function = functools.partial(f, self)
             functools.update_wrapper(wrapper=function, wrapped=f, assigned=("__doc__",))
