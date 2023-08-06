@@ -6,11 +6,14 @@ from collections.abc import AsyncIterator, Callable, Coroutine
 from typing import Any
 
 from bambooflow.datapipes.aiter import AsyncIterDataPipe
+from bambooflow.helpers import functional_datapipe
 
 
+@functional_datapipe(name="map")
 class MapperAsyncIterDataPipe(AsyncIterDataPipe):
     """
-    Applies an asynchronous function over each item from the source DataPipe.
+    Applies an asynchronous function over each item from the source DataPipe
+    (functional name: ``map``).
 
     Parameters
     ----------

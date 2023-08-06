@@ -3,7 +3,7 @@ Tests for aiter datapipes.
 """
 import pytest
 
-from bambooflow.datapipes import AsyncIterDataPipe, AsyncIterableWrapper
+from bambooflow.datapipes import AsyncIterableWrapper, AsyncIterDataPipe
 
 
 # %%
@@ -20,6 +20,16 @@ def fixture_datapipe():
     datapipe = AIDP()
     return datapipe
 
+
+def test_asynciterdatapipe_getattr_error(datapipe):
+    """
+    Ensure that the __getattr__ method of an AsyncIterDataPipe raises an
+    AttributeError when an invalid attribute is called.
+    """
+    with pytest.raises(
+        AttributeError, match="'AIDP' object has no attribute 'invalid'"
+    ):
+        datapipe.invalid()
 
 def test_asynciterdatapipe_repr(datapipe):
     """
