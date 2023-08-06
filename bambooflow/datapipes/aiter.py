@@ -24,6 +24,7 @@ class AsyncIterDataPipe(AsyncIterable):
         """ """
         if f := AsyncIterDataPipe._functions.get(attribute_name):
             function = functools.partial(f, self)
+            functools.update_wrapper(wrapper=function, wrapped=f, assigned=("__doc__",))
         else:
             raise AttributeError(
                 f"'{self.__class__.__name__}' object has no attribute '{attribute_name}'"

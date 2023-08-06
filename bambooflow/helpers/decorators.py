@@ -39,6 +39,7 @@ class functional_datapipe:
             return cls(source_dp, *args, **kwargs)
 
         function = functools.partial(class_function, *args, **kwargs)
+        functools.update_wrapper(wrapper=function, wrapped=cls, assigned=("__doc__",))
 
         # Set function/method on base AsyncIterDataPipe, so that all classes
         # inheriting from AsyncIterDataPipe can use the function too
